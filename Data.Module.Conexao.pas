@@ -23,7 +23,7 @@ uses
 	FireDAC.DatS,
 	FireDAC.DApt.Intf,
 	FireDAC.DApt,
-	FireDAC.Comp.DataSet;
+	FireDAC.Comp.DataSet, FireDAC.Comp.UI;
 
 type
 	TConDBIni = record
@@ -39,11 +39,15 @@ type
 		FDConnection_Live : TFDConnection;
 		FDPhysMySQLDriverLink1 : TFDPhysMySQLDriverLink;
 		FDQuery1 : TFDQuery;
-    procedure DataModuleCreate(Sender: TObject);
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+		procedure DataModuleCreate(Sender : TObject);
 		private
 		public
 			{ Public declarations }
 	end;
+
+type
+	TSQLParam = array of String;
 
 var
 	DataModuleConexao : TDataModuleConexao;
@@ -52,7 +56,9 @@ var
 procedure LerArquivoIni();
 procedure GravarArquivoIni();
 procedure AjustarConexaoBD();
-function ExecutaSQL(sql : String; const ZQueryParametro : TFDQuery = nil) : Boolean;
+function ExecutaSQL(sql : String; const ZQueryParametro : TFDQuery = nil; const vCampo : TField = nil) : Boolean;
+function ExecutaSQLArray(sql : String; const ZQueryParametro : TFDQuery = nil; const vaParams: TSQLParam = nil;
+	const vBin : TArrayField = nil) : Boolean;
 
 implementation
 
@@ -110,7 +116,7 @@ begin
 	DataModuleConexao.FDConnection_Live.Connected := True;
 end;
 
-function ExecutaSQL(sql : String; const ZQueryParametro : TFDQuery = nil) : Boolean;
+function ExecutaSQL(sql : String; const ZQueryParametro : TFDQuery = nil; const vCampo : TField = nil) : Boolean;
 begin
 	Result := False;
 	try
@@ -122,7 +128,6 @@ begin
 			ZQueryParametro.Close;
 			ZQueryParametro.sql.Clear;
 			ZQueryParametro.sql.Add(sql);
-
 			if (Pos('SELECT', Trim(UpperCase(sql))) in [1, 2]) then
 				ZQueryParametro.Open
 			else
@@ -133,10 +138,22 @@ begin
 			DataModuleConexao.FDQuery1.Close;
 			DataModuleConexao.FDQuery1.sql.Clear;
 			DataModuleConexao.FDQuery1.sql.Add(sql);
+			if DataModuleConexao.FDQuery1.Params.Count >= 1 then
+			begin
+				DataModuleConexao.FDQuery1.FieldDefs.Add(vCampo.FieldName, ftBlob);
+				DataModuleConexao.FDQuery1.Params[0].DataType := ftBlob;
+				DataModuleConexao.FDQuery1.Params[0].AssignField(vCampo);
+			end;
+
 			if (Pos('SELECT', Trim(UpperCase(sql))) in [1, 2]) then
 				DataModuleConexao.FDQuery1.Open
 			else
 				DataModuleConexao.FDQuery1.ExecSQL;
+
+			DataModuleConexao.FDQuery1.Fields.Clear;
+			DataModuleConexao.FDQuery1.FieldDefs.Clear;
+			DataModuleConexao.FDQuery1.Close;
+			DataModuleConexao.FDQuery1.Params.Clear;
 		end;
 	except
 		on E : Exception do
@@ -147,10 +164,77 @@ begin
 	end;
 end;
 
-procedure TDataModuleConexao.DataModuleCreate(Sender: TObject);
+function ExecutaSQLArray(sql : String; const ZQueryParametro : TFDQuery = nil; const vaParams : TSQLParam = nil;
+	const vBin : TArrayField = nil) : Boolean;
+var
+	os_Params : TStringList;
+	i         : Integer;
+begin
+	Result    := False;
+	os_Params := nil;
+	if Length(vaParams) > 0 then
+	begin
+		os_Params := TStringList.Create;
+		for i     := Low(vaParams) to High(vaParams) do
+			os_Params.Add(vaParams[i]);
+	end;
+	try
+		if (not DataModuleConexao.FDConnection_Live.Connected) then
+			Exit;
+		if (ZQueryParametro <> nil) then
+		begin
+			ZQueryParametro.Connection := DataModuleConexao.FDConnection_Live;
+			ZQueryParametro.Close;
+			ZQueryParametro.sql.Clear;
+			ZQueryParametro.sql.Add(sql);
+			if (Pos('SELECT', Trim(UpperCase(sql))) in [1, 2]) then
+				ZQueryParametro.Open
+			else
+				ZQueryParametro.ExecSQL;
+		end else
+		begin
+			DataModuleConexao.FDQuery1.Connection := DataModuleConexao.FDConnection_Live;
+			DataModuleConexao.FDQuery1.Close;
+			DataModuleConexao.FDQuery1.sql.Clear;
+			DataModuleConexao.FDQuery1.sql.Add(sql);
+			if Assigned(os_Params) then
+			begin
+				for i := 0 to Pred(DataModuleConexao.FDQuery1.Params.Count) do
+				begin
+					DataModuleConexao.FDQuery1.FieldDefs.Add(os_Params[i], ftBlob);
+					DataModuleConexao.FDQuery1.Params[i].DataType := ftBlob;
+					DataModuleConexao.FDQuery1.Params[i].Value    := vBin[i];
+				end;
+			end;
+			// if DataModuleConexao.FDQuery1.Params.Count >= 1 then
+			// begin
+			// DataModuleConexao.FDQuery1.FieldDefs.Add(vCampo.FieldName, ftBlob);
+			// DataModuleConexao.FDQuery1.Params[0].DataType := ftBlob;
+			// DataModuleConexao.FDQuery1.Params[0].AssignField(vCampo);
+			// end;
+			if (Pos('SELECT', Trim(UpperCase(sql))) in [1, 2]) then
+				DataModuleConexao.FDQuery1.Open
+			else
+				DataModuleConexao.FDQuery1.ExecSQL;
+
+			DataModuleConexao.FDQuery1.Fields.Clear;
+			DataModuleConexao.FDQuery1.FieldDefs.Clear;
+			DataModuleConexao.FDQuery1.Close;
+			DataModuleConexao.FDQuery1.Params.Clear;
+		end;
+	except
+		on E : Exception do
+		begin
+			ShowMessage('Erro no metodo ExecutaSQL ' + #13#10 + E.Message);
+			Raise;
+		end;
+	end;
+end;
+
+procedure TDataModuleConexao.DataModuleCreate(Sender : TObject);
 begin
 	LerArquivoIni;
-  AjustarConexaoBD;
+	AjustarConexaoBD;
 end;
 
 end.

@@ -85,6 +85,9 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_MajorVer>2</VerInfo_MajorVer>
+        <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=2.0.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -125,23 +128,10 @@
             <Form>Form_JSON_Exemplo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\core\DataSet.Serialize.Export.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\core\DataSet.Serialize.Import.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\helpers\DataSet.Serialize.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\providers\DataSet.Serialize.Consts.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\providers\DataSet.Serialize.Utils.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\singletons\DataSet.Serialize.Config.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\types\DataSet.Serialize.BooleanField.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\types\DataSet.Serialize.Language.pas"/>
-        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\types\DataSet.Serialize.UpdatedStatus.pas"/>
         <DCCReference Include="View.Frame.Usuario.pas">
             <Form>Frame_Usuario</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="View.Padrao.Form.pas">
-            <Form>Form_Padrao_Form</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="View.Padrao.Pesquisa.pas">
             <Form>Form_Padrao_Pesquisa</Form>
@@ -155,6 +145,36 @@
             <Form>Form_Pesquisa_Pedidos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.Config.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.Consts.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.Export.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.Import.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.Language.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.UpdatedStatus.pas"/>
+        <DCCReference Include="..\..\andre\Componentes\D10.3\viniciussanchez_dataset-serialize\dataset-serialize-master\src\DataSet.Serialize.Utils.pas"/>
+        <DCCReference Include="View.Padrao.MenuModerno.pas">
+            <Form>Form_Padrao_MenuModerno</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="View.Principal.MenuModerno.pas">
+            <Form>Form_Principal_MenuModerno</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="View.Cadastro.Produto.pas">
+            <Form>Form_Cadastro_Produto</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="View.Padrao.Form.pas">
+            <Form>Form_Padrao_Form</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Utils.pas"/>
+        <DCCReference Include="View.Pesquisa.Produto.pas">
+            <Form>Form_PesquisaProduto</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Entity.Cadastro.Produto.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -659,6 +679,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

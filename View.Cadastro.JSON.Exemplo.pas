@@ -28,7 +28,7 @@ uses
 	FireDAC.Comp.DataSet,
 	FireDAC.Comp.Client,
 	Data.Module.Conexao,
-	DataSet.Serialize, Datasnap.DBClient;
+	DataSet.Serialize, Datasnap.DBClient, Vcl.Buttons;
 
 type
 	TForm_JSON_Exemplo = class(TForm_PadraoCadastro)

@@ -1,8 +1,8 @@
 object DataModuleConexao: TDataModuleConexao
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 394
-  Width = 431
+  Height = 241
+  Width = 272
   object FDConnection_Live: TFDConnection
     Params.Strings = (
       'Database=test'
@@ -26,5 +26,11 @@ object DataModuleConexao: TDataModuleConexao
     Connection = FDConnection_Live
     Left = 200
     Top = 72
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    ScreenCursor = gcrAppWait
+    Left = 184
+    Top = 160
   end
 end

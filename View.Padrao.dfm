@@ -25,9 +25,8 @@ object Form_Padrao: TForm_Padrao
     Height = 501
     Align = alClient
     Stretch = True
-    ExplicitTop = 63
-    ExplicitWidth = 635
-    ExplicitHeight = 242
+    ExplicitLeft = 1
+    ExplicitTop = 62
   end
   object Panel1: TPanel
     Left = 0

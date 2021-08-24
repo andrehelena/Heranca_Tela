@@ -1,4 +1,4 @@
-unit View.Pesquisa.Usuario;
+unit View.Pesquisa.Produto;
 
 interface
 
@@ -25,13 +25,13 @@ uses
 	FireDAC.DApt,
 	FireDAC.Comp.DataSet,
 	FireDAC.Comp.Client,
-	Vcl.StdCtrls,
+	Vcl.Buttons,
 	Vcl.Grids,
 	Vcl.DBGrids,
-	Vcl.ExtCtrls, Vcl.Buttons;
+	Vcl.ExtCtrls;
 
 type
-	TForm_PesquisaUsuario = class(TForm_Padrao_Pesquisa)
+	TForm_PesquisaProduto = class(TForm_Padrao_Pesquisa)
 		private
 			{ Private declarations }
 		public
@@ -39,7 +39,7 @@ type
 	end;
 
 var
-	Form_PesquisaUsuario : TForm_PesquisaUsuario;
+	Form_PesquisaProduto : TForm_PesquisaProduto;
 
 implementation
 

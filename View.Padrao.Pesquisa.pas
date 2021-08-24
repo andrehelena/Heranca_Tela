@@ -29,21 +29,28 @@ uses
 	FireDAC.DApt,
 	FireDAC.Comp.DataSet,
 	FireDAC.Comp.Client,
-	Data.Module.Conexao;
+	Data.Module.Conexao,
+	Vcl.Buttons;
 
 type
 	TForm_Padrao_Pesquisa = class(TForm_Padrao_Form)
-		Button_Atualizar : TButton;
-		Button_Confirmar : TButton;
-		Button_Sair : TButton;
-		DBGrid1 : TDBGrid;
 		FDQuery_Pesquisa : TFDQuery;
 		DataSource_Pesquisa : TDataSource;
+		Panel_Confirmar : TPanel;
+		Shape_Confirma : TShape;
+		Button_Confirmar : TSpeedButton;
+		Panel_Sair : TPanel;
+		Shape_Sair : TShape;
+		Button_Sair : TSpeedButton;
+		Panel_Atualizar : TPanel;
+		Shape_Excluir : TShape;
+		Button_Atualizar : TSpeedButton;
+		DBGrid1 : TDBGrid;
 		procedure Button_AtualizarClick(Sender : TObject);
-    procedure Button_ConfirmarClick(Sender: TObject);
-    procedure Button_SairClick(Sender: TObject);
+		procedure Button_ConfirmarClick(Sender : TObject);
+		procedure Button_SairClick(Sender : TObject);
 		private
-			{ Private declarations }
+			procedure CreateParams(var Params: TCreateParams); override;
 		public
 			SQL_Consulta : String;
 	end;
@@ -62,16 +69,22 @@ begin
 	ExecutaSQL(SQL_Consulta, FDQuery_Pesquisa);
 end;
 
-procedure TForm_Padrao_Pesquisa.Button_ConfirmarClick(Sender: TObject);
+procedure TForm_Padrao_Pesquisa.Button_ConfirmarClick(Sender : TObject);
 begin
-  inherited;
+	inherited;
 	ModalResult := mrOk;
 end;
 
-procedure TForm_Padrao_Pesquisa.Button_SairClick(Sender: TObject);
+procedure TForm_Padrao_Pesquisa.Button_SairClick(Sender : TObject);
+begin
+	inherited;
+	Close;
+end;
+
+procedure TForm_Padrao_Pesquisa.CreateParams(var Params: TCreateParams);
 begin
   inherited;
-	Close;
+//	Params.Style := WS_CHILDWINDOW;
 end;
 
 end.

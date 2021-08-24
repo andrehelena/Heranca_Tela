@@ -4,10 +4,6 @@ inherited Form_Principal: TForm_Principal
   TextHeight = 13
   inherited Image1: TImage
     Transparent = True
-    ExplicitLeft = 1
-    ExplicitTop = 62
-    ExplicitWidth = 929
-    ExplicitHeight = 501
   end
   inherited Panel1: TPanel
     Color = clBtnShadow
